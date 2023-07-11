@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-alpine
 
 RUN apk add --no-cache --update python3 git py3-pip
 
-RUN pip3 install python-dotenv
+RUN pip3 install python-dotenv requests
 
 ADD . /root/
 
