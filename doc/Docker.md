@@ -28,7 +28,7 @@ docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name ssz_con szz ash
 cd /root/fetch_jira_bugs
 python3 fetch_github.py <propriétaire> <respository> 
 python3 git_log_to_array.py --repo-path ../jenkins --from-commit 02d6908ada70fcf8012833ddef628bc09c6f8389
-python3 find_bug_fixes.py --gitlog ./gitlog.json --issue-list ./issues --gitlog-pattern "JENKINS-{nbr}\D|#{nbr}\D|HUDSON-{nbr}\D"
+python3 find_bug_fixes.py --gitlog ./gitlog.json --issue-list ./issues --gitlog-pattern "[Cc]loses #{nbr}\D|#{nbr}\D|[Ff]ixes #{nbr}\D"
 cd /root/szz
 java -jar ./build/libs/szz_find_bug_introducers-0.1.jar -i ../fetch_jira_bugs/issue_list.json -r ../jenkins
 ```
