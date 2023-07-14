@@ -27,10 +27,10 @@ As a result, you end up in an [ash shell](https://linux.die.net/man/1/ash) that 
 docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name ssz_con szz ash
 cd /root/fetch_jira_bugs
 python3 fetch_github.py <propriétaire> <respository> 
-python3 git_log_to_array.py --repo-path ../jenkins --from-commit 02d6908ada70fcf8012833ddef628bc09c6f8389
+python3 git_log_to_array.py --repo-path ../darkreader --from-commit 53c5923c28a333219cfe589911b5c7efc45b9975
 python3 find_bug_fixes.py --gitlog ./gitlog.json --issue-list ./issues --gitlog-pattern "[Cc]loses #{nbr}\D|#{nbr}\D|[Ff]ixes #{nbr}\D"
 cd /root/szz
-java -jar ./build/libs/szz_find_bug_introducers-0.1.jar -i ../fetch_jira_bugs/issue_list.json -r ../jenkins
+java -jar ./build/libs/szz_find_bug_introducers-0.1.jar -i ../fetch_jira_bugs/issue_list.json -r ../darkreader
 ```
 
 The results from the algorithm will now be located in */root/szz/results*. To copy them to your current directory, start another command prompt and execute the following command:
