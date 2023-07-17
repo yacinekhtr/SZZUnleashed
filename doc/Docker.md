@@ -24,7 +24,8 @@ docker run -it --name szz_con szz ash
 As a result, you end up in an [ash shell](https://linux.die.net/man/1/ash) that is executed inside the Docker container. From the shell, you can now run the steps required to generate the data from SZZ Unleashed. Here are the commands to run to generate bug-introducing commits for the [Jenkins project](https://github.com/jenkinsci/jenkins).
 
 ```bash
-docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name ssz_con szz ash
+docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name szz_con szz ash
+git clone https://github.com/darkreader/darkreader.git
 cd /root/fetch_jira_bugs
 python3 fetch_github.py <propriétaire> <respository> 
 python3 git_log_to_array.py --repo-path ../darkreader --from-commit 53c5923c28a333219cfe589911b5c7efc45b9975
@@ -36,5 +37,5 @@ java -jar ./build/libs/szz_find_bug_introducers-0.1.jar -i ../fetch_jira_bugs/is
 The results from the algorithm will now be located in */root/szz/results*. To copy them to your current directory, start another command prompt and execute the following command:
 
 ```bash
-docker cp szz_con:/root/szz/results .
+docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder in container to hardware located in Path D:/Données 
 ```
