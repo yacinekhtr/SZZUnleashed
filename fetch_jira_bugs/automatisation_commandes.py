@@ -61,7 +61,7 @@ def test(url_list):
                 subprocess.run(["bash", "-c", commande_1], shell=True)
                 commande_2 = "docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name szz_con szz ash"
                 subprocess.run(["bash", "-c", commande_2], shell=True)
-                commande_3 = url_list[i]
+                commande_3 = "https://github.com/"+ result[i][0]+"/" + result[i][1] +".git"
                 subprocess.run(["bash", "-c", commande_3], shell=True)
                 commande_4 = "cd /root/fetch_jira_bugs"
                 subprocess.run(["bash", "-c", commande_4], shell=True)
