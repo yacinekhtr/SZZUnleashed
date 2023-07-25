@@ -178,10 +178,10 @@ def execution(proprio, nomRepo):
     contenu = allStepds(proprio, nomRepo)
     #print("ici")
 
-    if not os.path.exists("issues"):
-        os.makedirs("issues")
+    if not os.path.exists("fetch_issues"):
+        os.makedirs("fetch_issues")
 
-    with open("issues/res0.json", 'w') as ecriture:
+    with open("fetch_issues/res0.json", 'w') as ecriture:
             json.dump(contenu, ecriture)
     #except:
     #    print("Erreur lors de l'écriture du fichier! :(")
