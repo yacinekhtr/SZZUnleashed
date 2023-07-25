@@ -45,9 +45,9 @@ with open('/input/Projects.csv', newline="") as csvfile:
                                                                                    
             subprocess.run(["python3", "/root/fetch_jira_bugs/fetch_github.py", github_owner, github_repo])
                                                                                   
-            subprocess.run(["python3", "/root/fetch_jira_bugs/git_log_to_array.py", "--repo-path", github_repo, "--from_commit", Commit]
+            subprocess.run(["python3", "/root/fetch_jira_bugs/git_log_to_array.py", "--repo-path", github_repo, "--from-commit", Commit])
                                  
-            subprocess.run(["python3", "/root/fetch_jira_bugs/find_bug_fixes.py", "--gitlog", "./gitlog.json", "--issue-list", "./fetch_issues", "-gitlog-pattern", '"#{nbr}\D"'])
+            subprocess.run(["python3", "/root/fetch_jira_bugs/find_bug_fixes.py", "--gitlog", "./gitlog.json", "--issue-list", "./fetch_issues", "--gitlog-pattern", '"[Cc]loses #{nbr}\D|#{nbr}\D|[Ff]ixes #{nbr}\D"'])
         
             subprocess.run(["java", "-jar", "/root/szz/build/libs/szz_find_bug_introducers-0.1.jar", "-i", "./issue_list.json", "-r", github_repo])
 

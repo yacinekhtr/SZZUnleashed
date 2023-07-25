@@ -39,3 +39,9 @@ The results from the algorithm will now be located in */root/szz/results*. To co
 ```bash
 docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder in container to hardware located in Path D:/Données 
 ```
+
+# new docker command:
+
+```bash
+docker run -e GITHUB_TOKEN=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 -v ./inputProject:/input  -v ./ouputDocker:/output --name szz_con szz ash
+```
