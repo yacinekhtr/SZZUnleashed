@@ -1,13 +1,20 @@
 FROM openjdk:8-jdk-alpine
 
-RUN apk add --no-cache --update python3 git py3-pip
+RUN apk add --no-cache --update python3 \
+        #python3-dev \
+        git \
+        py3-pip 
+        #build-base \
+        #musl-dev \
+        #gfortran \
+        #libffi-dev 
 
 RUN pip3 install python-dotenv requests
 
 ADD . /root/
 
 WORKDIR /root
-RUN git clone https://github.com/jenkinsci/jenkins.git
+#RUN git clone https://github.com/jenkinsci/jenkins.git
 
 RUN apk add --no-cache --update openjdk8 curl
 
