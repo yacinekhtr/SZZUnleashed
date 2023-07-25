@@ -31,3 +31,5 @@ WORKDIR /root/szz
 RUN gradle build && gradle fatJar
 
 WORKDIR /root
+
+ENTRYPOINT ["python3", "fetch_jira_bugs/automatisation_commandes.py"]
