@@ -11,80 +11,48 @@ import csv
 import os
 import subprocess
 
-with open('h:\Downloads\Projects.csv', newline="") as csvfile:
-    Projet = csv.reader(csvfile)
+parent_folder = '/root/projet_tests'
 
-#Projet = csv('h:\Downloads\Projects.csv', header = 0)
-K = Projet.copy()
-K['URL '].replace('https://github.com/', ' ').replace('/', ' ')
-Projet.head()
-
-parent_folder = 'D:\projet_tests'
-#url_list = Projet['URL '].tolist()
-#commit_list = Projet['Commit '].tolist()
-
-
-#commande_1 = "docker build -t szz ."
-#subprocess.run(["bash", "-c", commande_1], shell=True)
-
-def test(url_list):
+with open('/input/Projects.csv', newline="") as csvfile:
     
-# Parcourir chaque ligne du DataFrame
+    # Parcourir chaque ligne du DataFrame
     #for index, row in Projet.iterrows():
-    for row in Projet:
+    for row in csv.reader(csvfile):
         # Each row is a list of values representing the columns
         url, Commit = row
         print(f"URL: {url}, Commit: {Commit}")
-# Extraire le premier mot de l'URL GitHub
-        #url = row['URL ']
+        # Extraire le premier mot de l'URL GitHub
         github_owner, github_repo = url.split('/')[3:5]  # Assumant que l'URL suit le format "https://github.com/premier-mot/..."
-        #last_words_list = [url.split('/')[-1] for url in url_list]
-        #result = [[word, word] for word in first_word]
-    # Chemin complet du dossier à créer
+        # Chemin complet du dossier à créer
         folder_path = os.path.join(parent_folder, '__'.join([github_owner,github_repo]))
-        print(folder_path)
         folder_exists = os.path.exists(folder_path)
-        print(folder_exists)
-        #i = 0
-    #for i in range(len(url_list)):
-        #while  i <= len(url_list):
         
         if folder_exists : 
-            print("Le fichier existe déja")
-            #url_list.pop(i)
-                
-                #i+=1
-                #url_list[i]
-            #test(url_list)
+            print("Le folder " + folder_path + " existe deja")
         else :
-            #folder_path = os.path.join(parent_folder, result[i][0] + "_" + result[i][1])
-        
-                # # Créer un répertoire avec le chemin complet
+            # Créer un répertoire avec le chemin complet
             os.makedirs(folder_path, exist_ok=True)
                 
-                # #  afficher le nom du dossier créé
-            print(f"Dossier créé : {folder_path}")
-                
-                
-                ###Automatisation des commandes présentes dans Docker.md
-                
-                #commande_1 = "docker build -t szz ."
-                #subprocess.run(["bash", "-c", commande_1], shell=True)
-                #commande_2 = "docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name szz_con szz ash"
-                #subprocess.run(["bash", "-c", commande_2], shell=True)
-            commande_3 = "git clone https://github.com/"+ github_owner+"/" + github_repo +".git"
-            subprocess.run(["ash", "-c", commande_3], shell=True)
-            commande_4 = "cd /root/fetch_jira_bugs"
-            subprocess.run(["ash", "-c", commande_4], shell=True)
-            commande_5 = "python3 fetch_github.py"+ " " + github_owner+ " "+ github_repo
-            subprocess.run(["ash", "-c", commande_5], shell=True)
-            commande_6 = "python3 git_log_to_array.py --repo-path"+ " "+ "../"+github_repo+ " "+ "--from-commit"+ " "+ Commit
-            subprocess.run(["ash", "-c", commande_6], shell=True)
-            commande_7 = 'python3 find_bug_fixes.py --gitlog ./gitlog.json --issue-list ./issues --gitlog-pattern "[Cc]loses #{nbr}\D|#{nbr}\D|[Ff]ixes #{nbr}\D"'
-            subprocess.run(["ash", "-c", commande_7], shell=True)
-            commande_8 = "cd /root/szz"
-            subprocess.run(["ash", "-c", commande_8], shell=True)
-            commande_9 = "java -jar ./build/libs/szz_find_bug_introducers-0.1.jar -i ../fetch_jira_bugs/issue_list.json -r" + " "+ "../"+ github_repo
-            subprocess.run(["ash", "-c", commande_9], shell=True)
-                #commande_10 = 'docker cp -a szz_con:/root/szz/results "D:/Données"'
-                #subprocess.run(["ash", "-c", commande_10], shell=True)
+            #  afficher le nom du dossier créé
+            print(f"Dossier cree : {folder_path}")    
+
+            ###Automatisation des commandes présentes dans Docker.md
+         
+            os.chdir(folder_path)
+                                                                                         
+            url_git = f"https://github.com/{github_owner}/{github_repo}.git"                               
+            subprocess.run(["git", "clone", url_git])
+                                                                                   
+            subprocess.run(["python3", "/root/fetch_jira_bugs/fetch_github.py", github_owner, github_repo])
+                                                                                  
+            subprocess.run(["python3", "/root/fetch_jira_bugs/git_log_to_array.py", "--repo-path", github_repo, "--from_commit", Commit]
+                                 
+            subprocess.run(["python3", "/root/fetch_jira_bugs/find_bug_fixes.py", "--gitlog", "./gitlog.json", "--issue-list", "./fetch_issues", "-gitlog-pattern", '"#{nbr}\D"'])
+        
+            subprocess.run(["java", "-jar", "/root/szz/build/libs/szz_find_bug_introducers-0.1.jar", "-i", "./issue_list.json", "-r", github_repo])
+
+            project_output = os.path.join("/output/", '__'.join([github_owner,github_repo]))
+            os.makedirs(project_output, exist_ok=True)
+            subprocess.run(["cp", "./results/annotations.json", project_output])
+            subprocess.run(["cp", "./results/commits.json", project_output])
+            subprocess.run(["cp", "./results/fix_and_introducers_pairs.json", project_output])
