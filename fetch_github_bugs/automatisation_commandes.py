@@ -22,7 +22,7 @@ token = os.getenv('GITHUB_TOKEN')
 
 if token is None:
     print("GITHUB_TOKEN is not set in the environment", file = sys.stderr)
-    raise SystemExit(result.returncode)
+    raise SystemExit(0)
 else: 
     print("GITHUB_TOKEN=",token)
 os.makedirs(root_git, exist_ok=True)
