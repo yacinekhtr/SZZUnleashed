@@ -43,5 +43,10 @@ docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder
 # new docker command:
 
 ```bash
-docker run -e GITHUB_TOKEN=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 -v ./inputProject:/input  -v ./ouputDocker:/output --name szz_con szz ash
+#docker run -e GITHUB_TOKEN=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 -v  h:\SZZUnleashed\entree:/input  -v  h:\SZZUnleashed\sortie:/output  szz
+```
+
+```powershell
+
+docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output szz  ### commande qui exécute le processus d'automatisation des commabdes sur le powershell une fois que l'utilisateur a entré son GITHUB_TOKEN dans son environnement. 
 ```
