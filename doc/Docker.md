@@ -43,7 +43,7 @@ docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder
 # new docker command:
 
 ```bash
-#docker run -e GITHUB_TOKEN=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 -v  h:\SZZUnleashed\entree:/input  -v  h:\SZZUnleashed\sortie:/output  szz
+
 ```
 
 ```powershell
