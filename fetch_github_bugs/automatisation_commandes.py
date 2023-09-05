@@ -22,7 +22,7 @@ token = os.getenv('GITHUB_TOKEN')
 
 if token is None:
     print("GITHUB_TOKEN is not set in the environment", file = sys.stderr)
-    raise SystemExit(0)
+    raise SystemExit(1)
 else: 
     print("GITHUB_TOKEN=",token)
 os.makedirs(root_git, exist_ok=True)
@@ -38,9 +38,16 @@ with open('/input/Projects.csv', newline="") as csvfile:
         print(f"URL: {url}, Commit: {Commit}")
         # Extraire le premier mot de l'URL GitHub
         github_owner, github_repo = url.split('/')[3:5]  # Assumant que l'URL suit le format "https://github.com/premier-mot/..."
+        
+        clone_folder= '__'.join([github_owner,github_repo])
+        project_output = os.path.join("/output/results", clone_folder )
+        
         # Chemin complet du dossier à créer
         folder_path = os.path.join(parent_folder, '__'.join([github_owner,github_repo]))
-        folder_exists = os.path.exists(folder_path)
+        folder_exists = os.path.exists(project_output)
+        
+        print("checking existence of folder:", project_output)
+              
         
         if folder_exists : 
             print("Le folder " + folder_path + " existe deja")
@@ -92,8 +99,10 @@ with open('/input/Projects.csv', newline="") as csvfile:
                 print("Error:", result.returncode)
                 raise SystemExit(result.returncode)
 
-            clone_folder= '__'.join([github_owner,github_repo])
-            project_output = os.path.join("/output/results", clone_folder )
+            """ clone_folder= '__'.join([github_owner,github_repo])
+            project_output = os.path.join("/output/results", clone_folder ) """
+            
+            
             os.makedirs(project_output, exist_ok=True)
             print("le dossier results est crée:",project_output)
             
