@@ -8,6 +8,11 @@ To build the Docker image, execute the build command in the root folder:
 
 ```bash
 docker build -t szz .
+
+docker build -t szz -f "H:\SZZUnleashed\fetch_github_bugs\Dockerfile" "H:\SZZUnleashed\fetch_github_bugs"
+
+docker build -t szz -f "H:\SZZUnleashed\fetch_jira_bugs\Dockerfile" "H:\SZZUnleashed\fetch_jira_bugs"
+
 ```
 The dot indicates that the Dockerfile is located in the same directory as where the build command is executed.
 
