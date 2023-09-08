@@ -1,4 +1,4 @@
-### How to run SZZ Unleashed using the provided Docker image
+### How to run SZZ Unleashed using the provided Docker image for Jira repositories 
 
 Docker is a great tool if one is using a system where either the Python or Java installation is not working properly. It requires Docker to be installed which is something that won't be covered here but can be found in Docker's own [installation instructions](https://docs.docker.com/install/). To get further information about what Docker is, read the overall Docker [documentation](https://docs.docker.com/).
 
@@ -7,11 +7,11 @@ In the root of this repository, there is a file called *Dockerfile*. Running thi
 To build the Docker image, execute the build command in the root folder:
 
 ```bash
-docker build -t szz .
+###docker build -t szz .
 
-docker build -t szz -f "H:\SZZUnleashed\fetch_github_bugs\Dockerfile" "H:\SZZUnleashed\fetch_github_bugs"
 
-docker build -t szz -f "H:\SZZUnleashed\fetch_jira_bugs\Dockerfile" "H:\SZZUnleashed\fetch_jira_bugs"
+
+docker build -t szz  -f Dockerfile_jira .
 
 ```
 The dot indicates that the Dockerfile is located in the same directory as where the build command is executed.
@@ -20,6 +20,7 @@ When the build is done, you can verify that the finished Docker image(s) have be
 ```bash
 docker images
 ```
+
 
 Now to actually do something, a Docker container is needed. The Docker container is the running instance, or if you prefer: virtual machine, of the Docker image. It is a fully fledged system that runs an Alpine system. To start the container, just execute the command:
 ```bash
@@ -53,5 +54,16 @@ docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder
 
 ```powershell
 
-docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output szz  ### commande qui exécute le processus d'automatisation des commabdes sur le powershell une fois que l'utilisateur a entré son GITHUB_TOKEN dans son environnement. 
+
 ```
+
+
+
+```How to Run SZZUnleashed Algorithm with automatisation commands ```
+
+docker build -t szz -f "H:\SZZUnleashed\fetch_github_bugs\Dockerfile" "H:\SZZUnleashed\fetch_github_bugs"
+
+docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output 
+szz  
+
+### commande qui exécute le processus d'automatisation des commandes sur le powershell une fois que l'utilisateur a entré son GITHUB_TOKEN dans son environnement. 
