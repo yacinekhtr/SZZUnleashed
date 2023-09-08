@@ -24,7 +24,7 @@ docker images
 
 Now to actually do something, a Docker container is needed. The Docker container is the running instance, or if you prefer: virtual machine, of the Docker image. It is a fully fledged system that runs an Alpine system. To start the container, just execute the command:
 ```bash
-docker run -it --name szz_con szz ash
+#docker run -it --name szz_con szz ash
 ```
 
 As a result, you end up in an [ash shell](https://linux.die.net/man/1/ash) that is executed inside the Docker container. From the shell, you can now run the steps required to generate the data from SZZ Unleashed. Here are the commands to run to generate bug-introducing commits for the [Jenkins project](https://github.com/jenkinsci/jenkins).
@@ -63,6 +63,8 @@ docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder
 
 docker build -t szz -f Dockerfile_github .
 
+
+### Executer ensuite le fichier python driver.py que pour les dépôts githubs.
 
 docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output 
 szz  
