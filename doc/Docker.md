@@ -61,7 +61,8 @@ docker cp -a szz_con:/root/szz/results "D:/Données"  ## copy the results folder
 
 ```How to Run SZZUnleashed Algorithm with automatisation commands ```
 
-docker build -t szz -f "H:\SZZUnleashed\fetch_github_bugs\Dockerfile" "H:\SZZUnleashed\fetch_github_bugs"
+docker build -t szz -f Dockerfile_github .
+
 
 docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output 
 szz  
