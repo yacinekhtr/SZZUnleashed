@@ -1,28 +1,19 @@
-# new docker command for Github repositories:
+# How to Run SZZUnleashed Algorithm using github repositories and bug trackers
+
+Build the docker image that works with GitHub:
 
 ```bash
-
-```
-
-```powershell
-
-
-```
-```How to Run SZZUnleashed Algorithm with automatisation commands and github repositories ```
-
 docker build -t szz_github -f Dockerfile_github .
+```
 
+Run the sample automation script `pipeline.py` that expects a list of projects in `entree/Projects.csv`. This example will calculate correlation of the bugs with the size of the files. It uses a Pharo image in part of the steps. You must have a variable GITHUB_TOKEN defined in your environment, because it accesses the GitHub API. Get a token following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). 
 
-### Executer ensuite le fichier pipeline.py que pour les dépôts githubs.
+```bash
+docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v h:/SZZUnleashed/entree:/input -v h:/SZZUnleashed/sortie:/output szz  
+```
 
-docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output 
-szz  
+### How to get the Pharo/Moose image used in the pipeline
 
-### commande qui exécute le processus d'automatisation des commandes sur le powershell une fois que l'utilisateur a entré son GITHUB_TOKEN dans son environnement.
-
-
-
-### Obtention de l'image Moose afin d'effectuer les tests
 
 aller télécharger les fichiers du projet SZZ_results_analyser sur mon github dont le lien est le suivant: 
 
