@@ -1,45 +1,71 @@
-# new docker command for Github repositories:
+# SZZUnleashed using GitHub repositories and issues
 
-```bash
+Build the docker image that works with GitHub:
 
-```
-
-```powershell
-
-
-```
-```How to Run SZZUnleashed Algorithm with automatisation commands and github repositories ```
-
+``` bash
 docker build -t szz_github -f Dockerfile_github .
+```
 
+Then you can run the sample automation script `pipeline.py` that expects a list of projects in `entree/Projects.csv`. This example will calculate the correlation of the detected bugs with the size of the files where they're located. It uses a Pharo image in part of the steps, so you must install Pharo (see below). You must have a variable GITHUB_TOKEN defined in your environment, because it accesses the GitHub API. Get a token following [these instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
 
-### Executer ensuite le fichier pipeline.py que pour les dépôts githubs.
+The docker image is run from `pipeline.py`, which is the main driver of the analysis.
 
-docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v  h:/SZZUnleashed/entree:/input  -v  h:/SZZUnleashed/sortie:/output 
-szz  
+### If you don't want to run the automation
 
-### commande qui exécute le processus d'automatisation des commandes sur le powershell une fois que l'utilisateur a entré son GITHUB_TOKEN dans son environnement.
+You don't have to use the the pipeline automation. It's possible to run the docker image alone, but you have to take care of the paths:
 
+``` bash
+docker run -e GITHUB_TOKEN=$env:GITHUB_TOKEN -v h:/SZZUnleashed/entree:/input -v h:/SZZUnleashed/sortie:/output szz  
+```
 
+### How to get the Pharo/Moose image used in the pipeline
 
-### Obtention de l'image Moose afin d'effectuer les tests
+1.  Install [**Pharo Launcher**](https://pharo.org/web/download) and launch it.
 
-aller télécharger les fichiers du projet SZZ_results_analyser sur mon github dont le lien est le suivant: 
+2.  Add an image from the *Moose Suite 10 (stable)* template taking care to name it **m10_szz**.
 
-https://github.com/yacinekhtr/SZZ_results_analyser
+3.  Select the Moose Suite 10 (development) image (created in the previous step) in Pharo Launcher and start it (click the Launch button).
 
-Lancer ensuite Moose et aller sur "Iceberg" qui se trouve dans le label Browse puis ajouter le répertoire précédemment télécharger "SZZ_results_analyser" à l'aide du bouton "ADD"
+4.  In Pharo, type <kbd>CTRL</kbd>-<kbd>O</kbd><kbd>CTRL</kbd>-<kbd>I</kbd> to open Iceberg.
 
-puis clique droit sur le répertoire et cliquer sur "packages" et ajouter "SZZ_analysis" à l'aide du bouton "ADD package". 
+5.  Press the add button to add the repository at <https://github.com/yacinekhtr/SZZ_results_analyser>
 
+6.  Select **Clone from github.com** and enter the **Owner name** and **Project name** as shown below:\
+    ![](IcebergScreenshot.png)
 
-### Commande de création d'un environnement virtuel pour le projet python à exécuter dans le powershell
+7.  Select **SZZ_results_analyser** in the list of repositories, and type <kbd>CTRL</kbd>-<kbd>P</kbd> (to view the packages).
 
+8.  Right-click on the **SZZAnalysis** package and select **Load** as shown below:\
+    ![](LoadPackage.png)
+
+9.  In the **Pharo** menu, select **Save and quit**. Normally your image should be saved in a directory **Pharo/images/m10_szz** relative to your home directory.
+
+### Create a virtual environment to run the python automation script
+
+Inside a Windows Powershell (it also works in other environments, but you have to read the docs for venv) create a virtual environment by typing:
+
+``` powershell
 python -m venv my_env
+```
 
-.\my_venv\Scripts\Activate.ps1 
+You only have to do this one time. Afterwards, you must enable it by typing:
 
+``` powershell
+.\my_venv\Scripts\Activate.ps1
+```
+
+Install the python libraries used in the automation script (only need to do this once):
+
+``` powershell
 pip install numpy pandas
+```
 
+### Run the Python program that has the automated pipeline
+
+Before running the `.\driver\pipeline.py` program, you must set the variables at the top of the code, e.g., `vm_path`, `Pharo_path`, etc.
+
+Start the pipeline program with the following command:
+
+``` powershell
 python .\driver\pipeline.py
-
+```
