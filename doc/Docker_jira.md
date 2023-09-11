@@ -9,6 +9,15 @@ To build the Docker image, execute the build command in the root folder:
 ```bash
 ###docker build -t szz .
 
+### Obtention de l'image Moose afin d'effectuer les tests
+
+aller télécharger les fichiers du projet SZZ_results_analyser sur mon github dont le lien est le suivant: 
+
+https://github.com/yacinekhtr/SZZ_results_analyser
+
+Lancer ensuite Moose et aller sur "Iceberg" qui se trouve dans le label Browse puis ajouter le répertoire précédemment télécharger "SZZ_results_analyser" à l'aide du bouton "ADD"
+
+puis clique droit sur le répertoire et cliquer sur "packages" et ajouter "SZZ_analysis" à l'aide du bouton "ADD package". 
 
 
 docker build -t szz_jira  -f Dockerfile_jira .

@@ -11,12 +11,11 @@ import subprocess
 import csv 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import re
 
 
-# Variable racine
-racine = r"h:/SZZUnleashed/"
+# Build an image Pharo 10 from this repo: https://github.com/yacinekhtr/SZZ_results_analyser
 vm_path = r"C:/Users/CYTech Student/Documents/Pharo/vms/100-x64/Pharo.exe"
 Pharo_path = r"C:/Users/CYTech Student/Documents/Pharo/images/m10_szz/m10_szz.image"
 local_root = r"H:/SZZUnleashed"
@@ -39,8 +38,12 @@ if github_token is None:
 else:
     print("GITHUB_TOKEN =", github_token)
 
-# Commande Docker avec la variable racine
-docker_command = f"docker run -e GITHUB_TOKEN={github_token} -v {racine}entree:/input -v {racine}sortie:/output szz"
+# Commande Docker avec la variable local_root
+docker_command = f"docker run -e GITHUB_TOKEN={github_token} -v {local_root}/entree:/input -v {local_root}/sortie:/output szz_github"
+
+print("Running docker command:")
+print(docker_command)
+print("patience...")
 
 # Exécution de la commande Docker avec affichage en temps réel
 process = subprocess.Popen(docker_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
