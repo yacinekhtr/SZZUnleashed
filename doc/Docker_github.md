@@ -69,3 +69,6 @@ Start the pipeline program with the following command:
 ``` powershell
 python .\driver\pipeline.py
 ```
+### Here is an explanation of pipeline using docker and Pharo
+
+![UML activity diagram explaining the pipeline](https://www.plantuml.com/plantuml/svg/ZP51pjem48NtFeMbRdusEK10YDw0NLV8CicG37KywSoO5fJ3TzH4I9HK_JU9FNxlqnkzWsXaBKDoquWZ9CnGZVV9_HcxkgNcEx3dagkgshffleSEjI_doJ6C4DLvNpF4rX-Phj2eL8tSjgusbMyIPJYz6UiBQDClL-D--PeLVnJurgF2cnX52eY_K6g1Ls1s28cwe1GYSxpR1lzbsi4irLKehyN3t8PpwS85Vu7ClDLK8Q7eloZoU8GdoVwb0PRTpJv8sUSod87trJNo2hsXOK2L1LrRZX2V96Ko6EOkZ17vAOevaqOr-3BnVcx8_-mnWVyOYE6bfOr7yHztaCrV_Iy-jrRiTEmZasKSg8K4OJU73kQX_InvXTaop93cPFP-Sf-FvKHfT0V8RHdIRm00)
