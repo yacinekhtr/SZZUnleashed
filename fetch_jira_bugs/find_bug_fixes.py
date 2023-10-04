@@ -7,6 +7,7 @@ import os
 import json
 import re
 import argparse
+import datetime
 
 def find_bug_fixes(issue_path, gitlog_path, gitlog_pattern):
     """ Identify bugfixes in Jenkins repository given a list of issues """
@@ -64,6 +65,12 @@ def find_bug_fixes(issue_path, gitlog_path, gitlog_pattern):
     return issue_list
 
 
+def remove_microseconds(date_string):
+    date_obj = datetime.datetime.strptime(date_string[:-5], "%Y-%m-%d %H:%M:%S.%f")
+    formatted_date = date_obj.strftime("%Y-%m-%d %H:%M:%S") + " +0000"
+    return formatted_date
+
+
 def build_issue_list(path):
     """ Helper method for find_bug_fixes """
     issue_list = {}
@@ -73,12 +80,19 @@ def build_issue_list(path):
                 issue_list[issue['key']] = {}
 
                 created_date = issue['fields']['created'].replace('T', ' ')
-                created_date = created_date.replace('.000', ' ')
-                issue_list[issue['key']]['creationdate'] = created_date
+                #created_date = created_date.replace(".", " ").replace(" 000", " ")
+                #created_date = created_date.replace(".", " ")
+                #created_date = created_date.replace(" 000", " ")
+                #issue_list[issue['key']]['creationdate'] = created_date
+                issue_list[issue['key']]['creationdate'] = remove_microseconds(created_date)
+
 
                 res_date = issue['fields']['resolutiondate'].replace('T', ' ')
-                res_date = res_date.replace('.000', ' ')
-                issue_list[issue['key']]['resolutiondate'] = res_date
+                #res_date = res_date.replace(".", " ").replace(" 000", " ")
+                #res_date = res_date.replace(".", " ")
+                #res_date = res_date.replace("+", " ")
+                #issue_list[issue['key']]['resolutiondate'] = res_date
+                issue_list[issue['key']]['resolutiondate'] = remove_microseconds(res_date)
     return issue_list
 
 def commit_selector_heuristic(commits):
